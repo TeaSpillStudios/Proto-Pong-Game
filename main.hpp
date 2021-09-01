@@ -13,8 +13,8 @@ struct Ball {
     int x = 400;
     int y = 300;
 
-    int xvel = 5;
-    int yvel = 5;
+    int xvel = publicvariables::speed;
+    int yvel = publicvariables::speed;
 };
 
 struct Ball ball1;
