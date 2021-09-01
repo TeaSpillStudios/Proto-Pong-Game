@@ -7,6 +7,7 @@ int player2x = 750;
 int player1y = 200;
 int player2y = 200;
 
+bool sceneRun = false;
 
 struct Ball {
     int x = 400;
@@ -42,25 +43,32 @@ void drawMainScene() {
 
 void updateMainScene() {
     drawMainScene();
+
+    if (!sceneRun) {
+        sceneRun = true;
+        ball1.xvel = publicvariables::speed;
+        ball1.yvel = publicvariables::speed;
+    }
+
     if (ball1.y <= player2y + 50) {
         if (player2y > 0) {
-            player2y -= 4;
+            player2y -= publicvariables::speed - 1;
         }
     } else {
         if (player2y <= 500) {
-            player2y += 4;
+            player2y += publicvariables::speed;
         }
     }
 
     if (player1y >= 0) {
         if (IsKeyDown(KEY_W)) {
-            player1y -= 6;
+            player1y -= publicvariables::speed + 1;
         }
     }
 
     if (player1y <= 500) {
         if (IsKeyDown(KEY_S)) {
-            player1y += 6;
+            player1y += publicvariables::speed + 1;
         }
     }
 
@@ -68,33 +76,34 @@ void updateMainScene() {
     ball1.y += ball1.yvel;
 
     if (ball1.y >= 600) {
-        ball1.yvel = -5;
+        ball1.yvel = publicvariables::speed * -1;
+        printf("Bounce bottom");
         playCollisionSound();
     }
 
     if (ball1.y <= 15) {
-        ball1.yvel = 5;
+        ball1.yvel = publicvariables::speed;
         playCollisionSound();
     }
 
     if (ball1.x <= 15) {
-        ball1.xvel = 5;
+        ball1.xvel = publicvariables::speed;
         playCollisionSound();
     } 
 
     if (ball1.x >= 800) {
-        ball1.xvel = -5;
+        ball1.xvel = -publicvariables::speed;
         playCollisionSound();
     }
 
     if (ball1.x <= 95) { // LEFT
         if (ball1.y >= player1y and ball1.y <= player1y + 100) {
-            ball1.xvel = 5;
+            ball1.xvel = publicvariables::speed;
             playCollisionSound();
         }
     } else if (ball1.x >= 750) { // RIGHT
         if (ball1.y >= player2y and ball1.y <= player2y + 100) {
-            ball1.xvel = -5;
+            ball1.xvel = -publicvariables::speed;
             playCollisionSound();
         }
     }
